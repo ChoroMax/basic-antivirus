@@ -1,0 +1,23 @@
+import os
+
+def dir_cmd(path, level=0):
+    result = ""
+
+    if not os.path.exists(path):
+        return f"path not found: {path}\n"
+
+    for item in os.listdir(path):
+        full_path = os.path.join(path, item)
+        indent = "\t" * level
+
+        if os.path.isfile(full_path):
+            result += f"{indent}[FILE]:\t{item}\n"
+        else:
+            result += f"{indent}[DIR]:\t{item}\n"
+            result += dir_cmd(full_path, level + 1)
+
+    return result
+
+
+path = input("Enter the path to scan: ")
+print(dir_cmd(path))
